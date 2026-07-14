@@ -1,0 +1,63 @@
+# Maven / Java build output
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+replay_pid*
+
+# IDE and editor files
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+*.swp
+*~
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local environment and secret-bearing files
+.env
+.env.*
+!.env.example
+!.env.template
+application-local.yml
+application-local.yaml
+application-local.properties
+application-secret.yml
+application-secret.yaml
+application-secret.properties
+*.jks
+*.p12
+*.pfx
+*.pem
+
+# Keep safe example configuration trackable
+!application-example.yml
+!application-example.yaml
+!application-example.properties
+!application-*.example.yml
+!application-*.example.yaml
+!application-*.example.properties
+
+# Local runtime data
+logs/
+tmp/
+*.pid
+
+# Temporary spreadsheet and delimited data files
+~$*.xlsx
+~$*.xls
+*.tmp.xlsx
+*.tmp.xls
+*.tmp.csv
+data/tmp/
+imports/tmp/
+exports/tmp/
