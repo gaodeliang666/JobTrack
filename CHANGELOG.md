@@ -6,15 +6,22 @@
 
 ### Added
 
-- 无。
+- 增加六张 MVP 关系骨架表的 Flyway V1 migration，建立直接用户归属、复合归属外键、索引和 RESTRICT 删除边界。
+- 增加基于 Spring 外部配置的可信 CurrentUserProvider、最小 AppUser Mapper 和用户上下文传递 Service。
+- 增加无数据库测试 Profile、Provider 与 Service 单元测试，以及默认关闭的 MySQL 集成测试和测试数据库安全 Guard。
+- 增加数据库设计、初始化边界和 MySQL 8.4.8 实际验证结果说明。
 
 ### Changed
 
-- 无。
+- 项目开发版本更新为 `0.3.0-SNAPSHOT`，增加经人工确认的 MyBatis、MySQL Connector/J、Flyway Core 和 Flyway MySQL 依赖。
+- README 和版本计划将 v0.3.0 标记为进行中，并更新 v0.3.0 人工验收清单。
+- 完整应用配置改为从环境变量读取数据库连接和当前用户 ID；普通自动化测试保持不依赖数据库。
+- 在人工授权的 MySQL 8.4.8 本机专用空测试库中完成 Flyway V1、六张表、字段、索引和七个外键验证。
+- 完成用户隔离、两类跨用户复合外键拒绝、重复 migration、打包、完整应用启动和健康接口验证。
 
 ### Fixed
 
-- 无。
+- 修复 MySQL JDBC 将 `DATETIME_PRECISION` 元数据返回为 `Long` 时直接转换为 `Integer` 导致的测试类型转换错误。
 
 ## [0.2.0] - 2026-07-15
 

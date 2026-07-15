@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.gaodeliang666.jobtrack.database.UserIsolationTestMapper">
+    <insert id="insertUser">
+        INSERT INTO app_user (id)
+        VALUES (#{userId})
+    </insert>
+
+    <insert id="insertCompany">
+        INSERT INTO company (id, user_id)
+        VALUES (#{companyId}, #{userId})
+    </insert>
+
+    <insert id="insertJob">
+        INSERT INTO job (id, user_id, company_id)
+        VALUES (#{jobId}, #{userId}, #{companyId})
+    </insert>
+
+    <insert id="insertJobApplication">
+        INSERT INTO job_application (id, user_id, job_id)
+        VALUES (#{applicationId}, #{userId}, #{jobId})
+    </insert>
+
+    <select id="findCompanyIdForUser" resultType="long">
+        SELECT id
+        FROM company
+        WHERE id = #{companyId}
+          AND user_id = #{userId}
+    </select>
+</mapper>
