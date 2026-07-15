@@ -4,16 +4,16 @@
 
 ## 1. Git 基线
 
-- [ ] 当前分支为 `feature/v0.2-spring-boot-bootstrap`，不是 `main`。
-- [ ] `main`、`origin/main` 和 `v0.1.0` 仍指向 v0.1.0 发布基线。
-- [ ] 未执行暂存、Commit、Push、Merge、Rebase、Tag 或 GitHub Release。
+- [ ] 当前分支为 `chore/v0.2.0-release`，不是 `main`。
+- [ ] 发布收尾分支从 PR #3 合并提交 `27094b8` 创建，`v0.1.0` Tag 仍保持原发布提交。
+- [ ] 本次发布收尾在人工确认前未执行暂存、Commit、Push、Merge、Rebase、Tag 或 GitHub Release；后续发布动作仅按人工明确指令执行。
 - [ ] 工作区保持未暂存、未提交状态，可供完整审阅。
 
 ## 2. Java 与 Maven 环境
 
 - [ ] `java -version` 显示 Java 21。
 - [ ] `mvn -version` 显示 Maven 3.9.14，并确认 Maven 使用 Java 21。
-- [ ] `pom.xml` 的 Java 版本为 21、Spring Boot 版本为 3.5.16、项目版本为 `0.2.0-SNAPSHOT`。
+- [ ] `pom.xml` 的 Java 版本为 21、Spring Boot 版本为 3.5.16、项目版本为 `0.2.0`。
 - [ ] 项目使用 `io.github.gaodeliang666:jobtrack` 坐标、`jar` 打包和 `io.github.gaodeliang666.jobtrack` 根包。
 
 ## 3. 依赖与构建边界
@@ -45,14 +45,14 @@
 - [ ] Spring 上下文加载测试通过。
 - [ ] 健康检查 MockMvc 测试验证 HTTP 200、JSON Content-Type 和 `status=UP`。
 - [ ] `mvn clean test` 成功。
-- [ ] `mvn package` 成功并生成 `target/jobtrack-0.2.0-SNAPSHOT.jar`。
+- [ ] `mvn clean package` 成功并生成 `target/jobtrack-0.2.0.jar`。
 
 ## 7. 启动验证
 
 - [ ] `mvn spring-boot:run` 能够在不连接数据库或生产资源的情况下启动。
 - [ ] Maven 启动后调用 `Invoke-RestMethod http://localhost:8080/api/health` 得到 `status=UP`。
 - [ ] Maven 启动验证后使用 `Ctrl+C` 正常停止应用。
-- [ ] `java -jar target/jobtrack-0.2.0-SNAPSHOT.jar` 能够启动应用。
+- [ ] `java -jar target/jobtrack-0.2.0.jar` 能够启动应用。
 - [ ] JAR 启动后调用相同健康接口得到 `status=UP`。
 - [ ] JAR 启动验证后使用 `Ctrl+C` 正常停止应用。
 
@@ -66,11 +66,11 @@
 
 ## 9. 文档一致性
 
-- [ ] README 明确 v0.2.0 进行中，当前只有工程骨架和技术健康检查。
+- [ ] README 明确 v0.2.0 已于 2026-07-15 发布，当前只有工程骨架和技术健康检查。
 - [ ] README 明确业务、数据库和登录等能力尚未实现。
 - [ ] README 中 Java 21、测试、打包、启动和接口调用命令已经实际验证。
-- [ ] `CHANGELOG.md` 只在 `Unreleased` 中记录当前变更，没有创建正式 v0.2.0 发布区。
-- [ ] `docs/version-plan.md` 只将 v0.2.0 状态改为“进行中”，其他版本状态和目标未改变。
+- [ ] `CHANGELOG.md` 保留空的 `Unreleased`，并创建 `[0.2.0] - 2026-07-15` 正式版本区。
+- [ ] `docs/version-plan.md` 只将 v0.2.0 状态改为“已发布”，其他版本状态和目标未改变。
 - [ ] README、CHANGELOG 和版本计划对当前能力及状态的描述一致。
 
 ## 10. 最终差异检查
