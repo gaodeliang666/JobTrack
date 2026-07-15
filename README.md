@@ -12,9 +12,9 @@ v0.1.0 项目引导版本已于 2026-07-14 发布，v0.2.0 Spring Boot 项目骨
 - 六张 MVP 关系骨架表的 Flyway V1 migration 和数据库设计文档；
 - 通过 Spring 外部配置取得用户 ID 的 `CurrentUserProvider`；
 - 最小 AppUser Mapper、用户上下文传递 Service 和无数据库自动化测试；
-- 默认关闭、等待单独授权后才能执行的真实 MySQL 集成测试。
+- 默认关闭、仅能针对安全本机测试库显式启用的真实 MySQL 集成测试。
 
-第一阶段没有连接 MySQL，也没有执行 Flyway migration 或真实 MySQL 集成测试。公司、岗位、投递、面试、沟通和统计 CRUD，登录、注册、密码、Token 和 Spring Security 均未实现。健康检查不是业务接口，也不代表数据库或后续版本功能已经完成。
+v0.3.0 尚未发布。公司、岗位、投递、面试、沟通和统计 CRUD，登录、注册、密码、Token 和 Spring Security 均未实现。健康检查不是业务接口，也不代表后续业务版本已经完成。
 
 ## 环境要求
 
@@ -36,7 +36,25 @@ mvn -version
 mvn clean test
 ```
 
-MySQL 集成测试默认跳过。只有获得单独数据库操作授权、准备安全的本机 `_test` 数据库并显式设置 `-Djobtrack.mysql.tests=true` 后，才允许执行完整 MySQL 测试；第一阶段不得执行该命令。
+普通无数据库测试已经实际通过：Tests run 45、Passed 37、Failures 0、Errors 0、Skipped 8；8 个 skipped 均为默认关闭的 MySQL 集成测试。
+
+MySQL 集成测试默认跳过。只有获得单独数据库操作授权、准备 localhost 上的专用空 `_test` 数据库和非 root 测试账号，并显式设置 `-Djobtrack.mysql.tests=true` 后，才允许执行：
+
+```powershell
+mvn -Djobtrack.mysql.tests=true clean test
+```
+
+第二阶段已在人工授权下使用 MySQL 8.4.8、localhost、专用非 root 测试账号和专用空 `_test` 数据库完成真实验证：
+
+- Flyway V1 成功执行，创建六张业务表和 `flyway_schema_history`；
+- 字段、索引和七个外键与数据库设计一致；
+- Job 跨用户关联 Company、JobApplication 跨用户关联 Job 均被复合外键拒绝；
+- CurrentUserService、Mapper 参数绑定和用户隔离查询验证通过；
+- 第二次 migration 没有重复执行 V1；
+- MySQL 集成测试全部通过，`mvn -Djobtrack.mysql.tests=true clean package` 成功；
+- 已生成 `target/jobtrack-0.3.0-SNAPSHOT.jar`；
+- 完整应用启动成功，`GET /api/health` 返回 HTTP 200 和 `{"status":"UP"}`；
+- 临时测试数据通过事务回滚，六张业务表最终无数据残留。
 
 从 v0.3.0 起，完整应用启动需要 MySQL，并必须由运行环境提供以下四项配置：
 
@@ -56,7 +74,7 @@ $env:JOBTRACK_DB_PASSWORD = "<local-password>"
 $env:JOBTRACK_CURRENT_USER_ID = "<positive-user-id>"
 ```
 
-不得把真实密码写入 README、YAML 或版本控制。完整应用启动与打包将在获得第二阶段授权并完成真实 MySQL 验证后执行：
+不得把真实密码写入 README、YAML 或版本控制。提供上述正式运行变量后，可以使用已经实际验证的命令启动应用：
 
 ```powershell
 mvn spring-boot:run

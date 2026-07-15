@@ -1,6 +1,6 @@
 # JobTrack v0.3.0 验收清单
 
-> 本清单分为第一阶段项目文件验收和第二阶段真实 MySQL 验收。自动化测试通过不等于版本已验收或已发布；第二阶段数据库操作必须另行获得人工授权。
+> 本清单区分第一阶段无数据库验证和第二阶段真实 MySQL 验证。第二阶段已获得单独人工授权并完成；自动化测试通过不等于版本已验收或已发布，当前 PR 尚未合并。
 
 ## 1. Git 与版本基线
 
@@ -8,7 +8,7 @@
 - [ ] 分支从带 `v0.2.0` Tag 的正式发布提交 `592d7b2` 创建。
 - [ ] v0.1.0 和 v0.2.0 继续标记为“已发布”，v0.3.0 标记为“进行中”，后续版本保持“计划”。
 - [ ] 项目版本为 `0.3.0-SNAPSHOT`。
-- [ ] 第一阶段修改保持未暂存、未提交，未执行 Push、Merge、Rebase、Tag、PR 或 Release。
+- [ ] 已按人工指令将批准范围拆分为 5 个 Commit，Push 当前功能分支并创建 PR #5；当前尚未 Merge、Tag 或 Release。
 
 ## 2. Java、Maven 与依赖
 
@@ -32,7 +32,7 @@
 
 ## 4. Flyway 与六张表
 
-- [ ] migration 只有 `db/migration/V1__create_mvp_schema.sql`，第一阶段未执行。
+- [ ] migration 只有 `db/migration/V1__create_mvp_schema.sql`，并已在人工授权的 MySQL 8.4.8 空测试库中成功执行。
 - [ ] migration 建立 `app_user`、`company`、`job`、`job_application`、`interview`、`communication` 六张表。
 - [ ] 所有表使用 InnoDB、`utf8mb4`、`BIGINT UNSIGNED AUTO_INCREMENT` 主键和 `DATETIME(6)` 审计时间。
 - [ ] 外键使用 `ON DELETE RESTRICT` 和 `ON UPDATE RESTRICT`。
@@ -49,7 +49,7 @@
 - [ ] 存在 AppUser Mapper 接口及 namespace 一致的 XML。
 - [ ] Mapper XML 只使用 `#{}` 参数绑定，不存在 `${}` SQL 值拼接。
 - [ ] AppUser Mapper 的最小查询只验证配置用户是否存在，不实现业务 CRUD。
-- [ ] 测试专用 UserIsolationTestMapper 默认不执行，仅用于第二阶段真实 MySQL 验证。
+- [ ] 测试专用 UserIsolationTestMapper 默认不执行，已在第二阶段真实 MySQL 验证中按显式开关运行。
 - [ ] 后续读取、更新和删除方案必须同时限制对象 ID 与 `user_id` 或完整归属链，并检查影响行数。
 
 ## 6. CurrentUserProvider
@@ -85,7 +85,7 @@
 
 ## 9. 第二阶段真实 MySQL 验收
 
-- [ ] 第二阶段已经取得独立人工授权，并明确测试数据库、账号、允许的创建和清理操作。
+- [ ] 第二阶段已经取得独立人工授权并完成，测试数据库、账号、允许的创建和清理操作均在授权范围内。
 - [ ] `mysql --version` 确认实际环境为 MySQL 8.4.8。
 - [ ] 使用 localhost 上名称以 `_test` 结尾的专用空数据库和非 root 测试账号。
 - [ ] 空库成功执行 V1 migration，`flyway_schema_history` 内容正确。
@@ -106,9 +106,9 @@
 
 ## 11. 文档一致性
 
-- [ ] README、CHANGELOG、版本计划、数据库设计和验收清单对能力与状态的描述一致。
+- [ ] README、CHANGELOG、数据库设计、验收清单和 PR #5 描述对能力、验证结果与状态的描述一致。
 - [ ] CHANGELOG 只在 `Unreleased` 中记录 v0.3.0，没有正式 `[0.3.0]` 发布区。
-- [ ] 第一阶段文档没有宣称 MySQL migration 或集成测试已经通过。
+- [ ] 文档准确区分第一阶段无数据库验证和第二阶段真实 MySQL 验证，不再把已经完成的第二阶段描述为未来工作。
 - [ ] v0.2.0 的已发布状态没有被改动。
 
 ## 12. 最终安全和差异检查
@@ -119,4 +119,4 @@
 - [ ] 已确认没有 `X-User-Id` 信任路径。
 - [ ] 已审阅 `git status`、`git diff --name-only`、`git diff --stat` 和完整 `git diff`。
 - [ ] `git diff --check` 通过，只包含批准范围内修改。
-- [ ] 第一阶段保持未暂存、未提交，等待人工验收和第二阶段授权。
+- [ ] 功能分支工作区干净，5 个 Commit 均属于批准范围，PR 合并前完成最终人工审查，且尚未创建 Tag 或 Release。

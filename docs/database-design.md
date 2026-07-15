@@ -4,7 +4,7 @@
 
 本文档描述 JobTrack v0.3.0 的 MySQL 关系骨架。当前版本只建立用户归属、对象关系、索引、外键和审计时间字段，不实现公司、岗位、投递、面试或沟通的业务 CRUD。
 
-数据库基线使用 MySQL 8 兼容语法，实际 MySQL 8.4.8 验证必须在单独获得数据库操作授权后执行。第一阶段只编写 migration，不连接数据库，也不宣称 migration 已经执行成功。
+数据库基线使用 MySQL 8 兼容语法。第二阶段已在单独人工授权下使用 MySQL 8.4.8、localhost、专用非 root 账号和人工确认的空测试库完成实际验证。
 
 ## 2. 初始化机制
 
@@ -135,17 +135,17 @@ Interview 和 Communication 的用户隔离必须通过关联 JobApplication 实
 
 完整应用启动需要 `JOBTRACK_DB_URL`、`JOBTRACK_DB_USERNAME`、`JOBTRACK_DB_PASSWORD` 和 `JOBTRACK_CURRENT_USER_ID`。这些值只能由 Spring 外部配置读取，不得提交真实密码、生产数据库地址或本机绝对路径。
 
-普通自动化测试使用 `no-db-test` Profile，排除 DataSource、Flyway 和 MyBatis 自动配置，不需要任何数据库变量。真实 MySQL 测试使用独立 Profile、安全 Guard 和显式开关，并且只有在单独获得数据库操作授权后才能执行。
+普通自动化测试使用 `no-db-test` Profile，排除 DataSource、Flyway 和 MyBatis 自动配置，不需要任何数据库变量。真实 MySQL 测试使用独立 Profile、安全 Guard 和显式开关，默认关闭；只有安全的本机 `_test` 数据库、非 root 测试账号和单独数据库操作授权同时具备时才能执行。
 
-## 8. 后续 MySQL 验证
+## 8. MySQL 8.4.8 实际验证结果
 
-后续第二阶段至少验证：
+第二阶段已完成以下验证：
 
-1. MySQL 8.4.8 专用空测试库能够应用 V1 migration；
-2. 六张表、字段、索引和外键与本文档一致；
-3. 第二次启动不会重复执行 migration；
-4. 跨用户 Company/Job 和 Job/JobApplication 关联被拒绝；
-5. Mapper 参数绑定和用户隔离测试通过；
-6. 测试数据通过事务回滚或人工批准的清理步骤移除。
-
-上述内容在第一阶段均不执行，也不得描述为已经验证。
+1. 使用人工确认的 localhost 专用空测试库和非 root 测试账号成功执行 V1 migration；
+2. `flyway_schema_history` 中 V1 成功记录恰好一条，没有失败或额外版本记录；
+3. 六张业务表、字段、索引和七个外键与本文档一致；
+4. 第二次 migration 的 `migrationsExecuted` 为 0，没有重复执行 V1；
+5. Job 跨用户关联 Company、JobApplication 跨用户关联 Job 均被复合外键拒绝；
+6. MyBatis 参数绑定、CurrentUserService 用户 ID 传递和用户隔离查询验证通过；
+7. 测试数据通过事务回滚，六张业务表最终数据条数均为 0；
+8. MySQL AUTO_INCREMENT 计数不保证随事务回滚，但计数变化不属于业务数据残留。
