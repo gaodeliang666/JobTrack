@@ -1,16 +1,10 @@
+# Copy this file to application-local.yml for local use. The copied file is ignored by Git.
+# Supply all values from the local process environment; do not place real credentials here.
 spring:
-  application:
-    name: jobtrack
   datasource:
     url: ${JOBTRACK_DB_URL}
     username: ${JOBTRACK_DB_USERNAME}
     password: ${JOBTRACK_DB_PASSWORD}
-  flyway:
-    clean-disabled: true
-    locations: classpath:db/migration
 
 jobtrack:
   current-user-id: ${JOBTRACK_CURRENT_USER_ID}
-
-mybatis:
-  mapper-locations: classpath*:mapper/**/*.xml
