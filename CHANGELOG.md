@@ -6,15 +6,22 @@
 
 ### Added
 
-- 无。
+- 增加六张 MVP 关系骨架表的 Flyway V1 migration，建立直接用户归属、复合归属外键、索引和 RESTRICT 删除边界。
+- 增加基于 Spring 外部配置的可信 CurrentUserProvider、最小 AppUser Mapper 和用户上下文传递 Service。
+- 增加无数据库测试 Profile、Provider 与 Service 单元测试，以及默认关闭的 MySQL 集成测试和测试数据库安全 Guard。
+- 增加数据库设计、初始化边界和后续真实 MySQL 验证说明。
 
 ### Changed
 
-- 无。
+- 项目开发版本更新为 `0.3.0-SNAPSHOT`，增加经人工确认的 MyBatis、MySQL Connector/J、Flyway Core 和 Flyway MySQL 依赖。
+- README 和版本计划将 v0.3.0 标记为进行中，并更新 v0.3.0 人工验收清单。
+- 完整应用配置改为从环境变量读取数据库连接和当前用户 ID；普通自动化测试保持不依赖数据库。
 
 ### Fixed
 
 - 无。
+
+> v0.3.0 第一阶段没有连接 MySQL、执行 Flyway migration 或运行真实 MySQL 集成测试，相关验证等待后续单独人工授权。
 
 ## [0.2.0] - 2026-07-15
 
