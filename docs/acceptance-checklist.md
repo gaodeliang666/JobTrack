@@ -1,15 +1,15 @@
 # JobTrack v0.3.0 验收清单
 
-> 本清单用于 v0.3.0 正式发布收尾。功能 PR #5 已合并，第二阶段真实 MySQL 验证已经完成；发布收尾仍需通过自动化检查和最终人工审查，当前尚未创建或合并发布收尾 PR，也尚未创建 Tag 或 GitHub Release。
+> 本清单记录 v0.3.0 的最终发布结果。功能 PR #5 和发布收尾 PR #6 均已合并，第二阶段真实 MySQL 验证已经完成；`v0.3.0` Tag 和 GitHub Release “JobTrack v0.3.0” 已创建并正式发布。
 
 ## 1. Git 与版本基线
 
-- [ ] 当前分支为 `chore/v0.3.0-release`，不是 `main`。
-- [ ] 发布分支从 PR #5 合并提交 `8599d61` 创建，`v0.1.0` 和 `v0.2.0` Tag 保持原发布提交不变。
-- [ ] 功能 PR #5 已合并，功能分支的 5 个批准 Commit 已进入 `main`。
-- [ ] v0.1.0、v0.2.0 和 v0.3.0 标记为“已发布”，v0.4.0 及后续版本保持“计划”。
-- [ ] 项目版本为正式版本 `0.3.0`。
-- [ ] 当前尚未创建或合并发布收尾 PR，尚未创建 `v0.3.0` Tag 或 GitHub Release。
+- [x] v0.3.0 正式发布基线为 `main`，`main`、`origin/main` 和 `v0.3.0` Tag 均指向发布提交 `157cafa24a84af9b8b362389a99d815bee184a1d`。
+- [x] 功能 PR #5 和发布收尾 PR #6 均已合并，PR #6 的合并提交为 `157cafa24a84af9b8b362389a99d815bee184a1d`。
+- [x] 功能分支的 5 个批准 Commit 已通过 PR #5 进入 `main`。
+- [x] 临时功能分支和发布分支均已删除，当前远程开发基线重新回到 `main`。
+- [x] v0.1.0、v0.2.0 和 v0.3.0 标记为“已发布”，v0.4.0 及后续版本保持“计划”。
+- [x] 项目版本为正式版本 `0.3.0`，v0.3.0 已于 2026-07-16 发布。
 
 ## 2. Java、Maven 与依赖
 
@@ -121,4 +121,14 @@
 - [ ] 已审阅 `git status`、`git diff --name-only`、`git diff --stat` 和完整 `git diff`。
 - [ ] `git diff --check` 通过，只包含批准范围内修改。
 - [ ] 发布收尾只修改 `pom.xml`、README、CHANGELOG、版本计划和本清单，代码、Migration、Mapper、配置和数据库设计无变化。
-- [ ] 发布收尾 Commit、Push 和 PR 仅在最终人工审查通过后执行；`v0.3.0` Tag 和 GitHub Release 仍等待单独人工指令。
+
+## 13. 最终发布状态
+
+- [x] PR #6 使用 merge commit 合并到 `main`，合并提交为 `157cafa24a84af9b8b362389a99d815bee184a1d`。
+- [x] `v0.3.0` Tag 已创建并指向 `157cafa24a84af9b8b362389a99d815bee184a1d`。
+- [x] GitHub Release “JobTrack v0.3.0” 已发布。
+- [x] GitHub Release 不是 Draft，也不是 Pre-release。
+- [x] GitHub 将 “JobTrack v0.3.0” 显示为 Latest。
+- [x] 本地 `main` 与 `origin/main` 同步。
+- [x] 正式发布完成时工作区干净。
+- [x] 远程功能分支和发布分支均已删除。
