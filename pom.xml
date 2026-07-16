@@ -13,7 +13,7 @@
 
     <groupId>io.github.gaodeliang666</groupId>
     <artifactId>jobtrack</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
 
     <name>JobTrack</name>
